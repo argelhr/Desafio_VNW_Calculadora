@@ -6,6 +6,10 @@ Tecnologias Utilizadas
 React: Uma biblioteca JavaScript para a criação de interfaces de usuário.
 styled-components: Uma biblioteca para estilizar componentes React.
 
+### Netlify
+
+O projeto está hospedado na Netlify e você pode acessá-lo [clicando aqui](https://calculadora-argelhr.netlify.app/).
+
 ### Instalação
 Clone o repositório:
 ```
