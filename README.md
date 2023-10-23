@@ -34,12 +34,12 @@ Isso iniciará o aplicativo em modo de desenvolvimento. Abra http://localhost:30
 
 ### Funcionalidades
 Números: Clique nos números de 0 a 9 e no ponto (.) para inserir os valores no visor da calculadora.
-Operações: Clique nas operações matemáticas (+, -, *, /) para realizar cálculos.
-Igual (=): Clique em "=" para obter o resultado que possui no acumulador.
+Operações: Clique nas operações matemáticas (+, -, *, /) para inserir os caracteres da operação .
+Igual (=): Clique em "=" para obter o resultado que possui no campo de previa superior.
 C (Limpar): Clique em "C" para limpar o visor da calculadora e reiniciar.
 
 ### Método de Uso
 1. O display possui dois campos de texto em um fundo branco.
 2. O campo inferior é destinado à entrada de dados, e você pode inserir números e operadores usando o teclado na interface.
-3. O campo superior exibe o resultado após a execução de uma operação.
-4. Os cálculos são realizados com base no valor exibido no campo superior e no valor presente no campo inferior, considerando a operação matemática selecionada.
+3. O campo superior exibe o resultado após você clicar na opção de igual ( = ).
+4. Os cálculos são realizados na forma que foram inseridos, ou seja, o que foi inserido primeiro é calculado primeiro.
