@@ -12,14 +12,18 @@ export const GlobalStyle = createGlobalStyle`
 export const Center = styled.div`
     width: 100vw;
     height: 100vh;
-    background-color: #333;
+    background-size: cover;
+    background-position: bottom;
+    background-image: url('./assets/foto.png');
+    
     display: flex;
+    
     align-items: center;
-    justify-content: center;
+    justify-content: left;
     `;
 
 export const Container = styled.div`
-    width: 25%;
+    width: 33%;
     height: 50vh;
     border: 1px solid #000;
     display: flex;
@@ -31,6 +35,8 @@ export const Container = styled.div`
     box-shadow: 1px 1px 1px #00f,
     -1px -1px 1px #f00;
     overflow: hidden;
+
+    margin: 0 0 0 30px
     `;
 
 export const Display = styled.div`
@@ -116,7 +122,7 @@ export const TeclaIgual = styled.button`
     }
     `;
 
-    export const TeclaLimpar = styled.button`
+export const TeclaLimpar = styled.button`
     width: 100%;
     height: 100%;
     background-color: #000;

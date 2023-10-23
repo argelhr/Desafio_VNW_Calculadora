@@ -1,19 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { GlobalStyle, Container, Display, Tecla, Teclado, Numerico, Operacoes, TeclaOperacao, Previa, Center } from './Styles'
 
 const Calculadora = () => {
 
     const numeros = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0, '.']
-    const operacoes = ['Del', '/', '*', '-', '+', '=']
+    const operacoes = ['Del', '/', '*', '-', '+']
 
     const [display, setDisplay] = useState('0')
     const [previa, setPrevia] = useState(0)
-    const [acumulador, setAcumulador] = useState(0)
-    const [operacao, setOperacao] = useState('')
 
     const mudaDisplay = (e) => {
 
-        if (display.includes('.') && e.target.innerHTML === '.') {
+
+        if (e.target.innerHTML === 'Del') {
+            if (display.length === 1) {
+                setDisplay('0')
+                return
+            }
+            setDisplay(display.slice(0, -1))
             return
         }
 
@@ -24,88 +28,108 @@ const Calculadora = () => {
 
     }
 
-    const mudaOperacao = (e) => {
+    const calcula = () => {
 
-        fazOperacao(e.target.innerHTML)
-        setOperacao(e.target.innerHTML)
+        let texto = display
+        let partes = []
+        let parte = ''
+
+        for (let i = 0; i < texto.length; i++) {
+            let char = texto[i];
+            if (char === '+' || char === '-' || char === '*' || char === '/') {
+                if (parte !== "") {
+                    partes.push(parte)
+                }
+                partes.push(char)
+                parte = ""
+            } else {
+                parte += char;
+            }
+        }
+
+        partes.push(parte)
+
+        for (let i = 0; i < partes.length; i++) {
+            if(verificaPontos(partes[i]))
+                return
+            if (partes[i] === '+') {
+                console.log('mais')
+                let valor = parseFloat(partes[i - 1]) + parseFloat(partes[i + 1])
+                partes.shift()
+                partes.shift()
+                partes.shift()
+                partes.unshift(valor)
+                i=0
+            }
+            if (partes[i] === '-') {
+                console.log('menos')
+                console.log(partes)
+                let valor = parseFloat(partes[i - 1]) - parseFloat(partes[i + 1])
+                partes.shift()
+                partes.shift()
+                partes.shift()
+                partes.unshift(valor)
+                i=0
+            }
+            if (partes[i] === '*') {
+                console.log('vezes')
+                let valor = parseFloat(partes[i - 1]) * parseFloat(partes[i + 1])
+                partes.shift()
+                partes.shift()
+                partes.shift()
+                partes.unshift(valor)
+                i=0
+            }
+            if (partes[i] === '/') {
+                console.log('dividido')
+                let valor = parseFloat(partes[i - 1]) / parseFloat(partes[i + 1])
+                partes.shift()
+                partes.shift()
+                partes.shift()
+                partes.unshift(valor)
+                i=0
+            }
+            setPrevia(isNaN(partes[0]) ? 'Erro' : partes[0])
+        }
     }
 
-    const fazOperacao = (e) => {
-
-        if (e === '+') {
-            setPrevia((parseFloat(acumulador) + parseFloat(display)).toString())
-            setAcumulador((parseFloat(acumulador) + parseFloat(display)).toString())
-            setDisplay('0')
-            return
+    const verificaPontos = (parte) => {
+        let pontos = 0
+        for (let i = 0; i < parte.length; i++) {
+            if(parte[i] === '.')
+                pontos++
         }
-
-        if (e === '-') {
-            setPrevia((parseFloat(acumulador) - parseFloat(display)).toString())
-            setAcumulador((parseFloat(acumulador) - parseFloat(display)).toString())
-            setDisplay('0')
-            return
+        if(pontos > 1){
+            setPrevia('Erro')
+            return true
         }
-
-        if (e === '*') {
-            setPrevia((parseFloat(acumulador) * parseFloat(display)).toString())
-            setAcumulador((parseFloat(acumulador) * parseFloat(display)).toString())
-            setDisplay('0')
-            return
-        }
-
-        if (e === '/') {
-            if (display === '0') {
-                alert('Não é possível dividir por zero')
-                return
-            }
-            setPrevia((parseFloat(acumulador) / parseFloat(display)).toString())
-            setAcumulador((parseFloat(acumulador) / parseFloat(display)).toString())
-            setDisplay('0')
-            return
-        }
-        if (e === '=') {
-            setPrevia('0')
-            setAcumulador(0)
-            setDisplay(acumulador.toString())
-            return
-        }
+        return false
     }
 
     const zerar = () => {
-        setOperacao('')
         setDisplay('0')
         setPrevia('0')
-        setAcumulador(0)
     }
 
     return (
         <>
             <GlobalStyle />
-
             <Center>
-
                 <Container>
 
-                    <Previa>
-                        <p>{previa}</p>
-                    </Previa>
-
-                    <Display>
-                        <p>{display}</p>
-                    </Display>
+                    <Previa><p>{previa}</p></Previa>
+                    <Display><p>{display}</p></Display>
 
                     <Teclado>
                         <Numerico>
                             {numeros.map((numero, index) => <Tecla key={index} onClick={mudaDisplay}>{numero}</Tecla>)}
                             <Tecla key={12} onClick={zerar}>C</Tecla>
                         </Numerico>
-
                         <Operacoes>
-                            {operacoes.map((operacao, index) => <TeclaOperacao key={index} onClick={mudaOperacao}>{operacao}</TeclaOperacao>)}
+                            {operacoes.map((operacao, index) => <TeclaOperacao key={index} onClick={mudaDisplay}>{operacao}</TeclaOperacao>)}
+                            <TeclaOperacao key={5} onClick={calcula}>=</TeclaOperacao>
                         </Operacoes>
                     </Teclado>
-
-
                 </Container>
             </Center>
         </>
