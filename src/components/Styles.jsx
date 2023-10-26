@@ -35,8 +35,12 @@ export const Container = styled.div`
     box-shadow: 1px 1px 1px #00f,
     -1px -1px 1px #f00;
     overflow: hidden;
-
-    margin: 0 0 0 30px
+    margin: 0 0 0 30px;
+    @media (max-width: 400px) {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+    }
     `;
 
 export const Display = styled.div`
